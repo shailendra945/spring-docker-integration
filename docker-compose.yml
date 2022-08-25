@@ -1,0 +1,29 @@
+version: "3.5"
+services:
+  docker-with-spring-profile:
+    image: infoiv/mytestimg
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    ports:
+      - "8080:7070"
+    networks:
+      - testbackendnet
+    depends_on:
+      - msqlDB
+    volumes:
+      - ./db_data:/var/lib/mysql
+    restart: always
+      
+  msqlDB:
+    image: mysql:8.0.30
+    ports:
+      - "3306:3306"
+    networks:
+      - testbackendnet
+      
+networks:
+  testbackendnet:
+    external: false
+    name: testbackendnet
+      
+   
